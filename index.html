@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="苏帅宇的 AI 应用开发作品集，展示 Agent自动化流程与 AI 产品原型。">
+  <title>苏帅宇 | AI 应用开发作品集</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #657187;
+      --line: #dbe7f4;
+      --paper: #fffdf8;
+      --sky: #eaf6ff;
+      --blue: #0b73d1;
+      --blue-deep: #0758a5;
+      --teal: #16b6a3;
+      --mint: #82d9b8;
+      --sun: #ffd75e;
+      --peach: #ffb184;
+      --pink: #f29ab8;
+      --violet: #8967f0;
+      --shadow: 0 20px 50px rgba(31, 70, 120, .14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Inter", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(130, 217, 184, .35), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(255, 215, 94, .26), transparent 26%),
+        linear-gradient(180deg, #f8fcff 0%, #fffaf0 46%, #f5fbff 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(219, 231, 244, .9);
+      background: rgba(255, 253, 248, .88);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border: 3px solid #222;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #fff4da, #d7f7ee);
+      position: relative;
+      box-shadow: 4px 4px 0 #222;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      top: 16px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #222;
+    }
+
+    .brand-mark::before {
+      left: 11px;
+    }
+
+    .brand-mark::after {
+      right: 11px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: #334155;
+    }
+
+    .nav-links a {
+      padding: 9px 12px;
+      border-radius: var(--radius);
+    }
+
+    .nav-links a:hover {
+      background: #eaf4ff;
+      color: var(--blue-deep);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      font-weight: 900;
+      box-shadow: 4px 4px 0 #202638;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #202638;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .btn-soft {
+      background: #fff;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    section {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+      align-items: center;
+      gap: 44px;
+      padding: 68px 0 54px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-deep);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 10px;
+      border: 2px solid #222;
+      border-radius: 999px;
+      background: var(--sun);
+      box-shadow: 2px 2px 0 #222;
+    }
+
+    h1 {
+      margin: 16px 0 18px;
+      font-size: clamp(46px, 7vw, 86px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 680px;
+      color: #425066;
+      font-size: 19px;
+      font-weight: 650;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+      max-width: 680px;
+    }
+
+    .stat {
+      min-height: 104px;
+      padding: 18px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 5px 5px 0 rgba(32, 38, 56, .16);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--blue);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 510px;
+    }
+
+    .desk {
+      position: absolute;
+      inset: 48px 0 0;
+      border: 3px solid #202638;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #fff 0%, #eef8ff 100%);
+      box-shadow: var(--shadow), 8px 8px 0 #202638;
+      overflow: hidden;
+    }
+
+    .desk-top {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 18px;
+      border-bottom: 3px solid #202638;
+      background: #fef0a6;
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+      border: 2px solid #202638;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .workflow-map {
+      position: relative;
+      height: 420px;
+      padding: 28px;
+    }
+
+    .agent-card {
+      position: absolute;
+      width: 164px;
+      min-height: 96px;
+      padding: 14px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fffdf8;
+      box-shadow: 5px 5px 0 rgba(32, 38, 56, .14);
+      font-weight: 900;
+    }
+
+    .agent-card span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .agent-card.one {
+      left: 28px;
+      top: 36px;
+      border-color: var(--teal);
+    }
+
+    .agent-card.two {
+      right: 28px;
+      top: 76px;
+      border-color: var(--peach);
+    }
+
+    .agent-card.three {
+      left: 54px;
+      bottom: 56px;
+      border-color: var(--pink);
+    }
+
+    .agent-card.four {
+      right: 48px;
+      bottom: 36px;
+      border-color: var(--violet);
+    }
+
+    .core-bot {
+      position: absolute;
+      left: 50%;
+      top: 49%;
+      width: 170px;
+      height: 170px;
+      transform: translate(-50%, -50%);
+      border: 3px solid #202638;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #d9f7ff, #ffffff 55%, #e6dcff);
+      box-shadow: 7px 7px 0 #202638;
+    }
+
+    .core-bot::before,
+    .core-bot::after {
+      content: "";
+      position: absolute;
+      top: 58px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #202638;
+    }
+
+    .core-bot::before {
+      left: 49px;
+    }
+
+    .core-bot::after {
+      right: 49px;
+    }
+
+    .core-bot b {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 42px;
+      height: 18px;
+      border: 3px solid #202638;
+      border-top: 0;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .connector {
+      position: absolute;
+      height: 4px;
+      background: repeating-linear-gradient(90deg, var(--blue), var(--blue) 14px, transparent 14px, transparent 22px);
+      opacity: .5;
+      transform-origin: left center;
+    }
+
+    .connector.a {
+      width: 190px;
+      left: 164px;
+      top: 142px;
+      transform: rotate(16deg);
+    }
+
+    .connector.b {
+      width: 170px;
+      right: 168px;
+      top: 178px;
+      transform: rotate(-18deg);
+    }
+
+    .connector.c {
+      width: 180px;
+      left: 190px;
+      bottom: 152px;
+      transform: rotate(-18deg);
+    }
+
+    .connector.d {
+      width: 160px;
+      right: 184px;
+      bottom: 136px;
+      transform: rotate(18deg);
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .section-heading p {
+      max-width: 560px;
+      margin: 0;
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .capabilities {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 20px 0 76px;
+    }
+
+    .capability {
+      padding: 22px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 5px 5px 0 rgba(32, 38, 56, .14);
+    }
+
+    .capability .chip {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #0c395e;
+      background: #dff2ff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .capability h3 {
+      margin: 14px 0 8px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .capability p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .projects {
+      padding: 76px 0;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 7px 7px 0 rgba(32, 38, 56, .14);
+      overflow: hidden;
+    }
+
+    .project-media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: #f1f7ff;
+      overflow: hidden;
+      border-bottom: 2px solid #202638;
+    }
+
+    .project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-card.tall .project-media img {
+      object-position: top center;
+    }
+
+    .project-badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      padding: 7px 11px;
+      border: 2px solid #202638;
+      border-radius: 999px;
+      background: #fffdf8;
+      box-shadow: 3px 3px 0 #202638;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .project-body {
+      padding: 22px;
+    }
+
+    .project-body h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    .project-body p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .project-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      color: #2f3b4f;
+      font-weight: 700;
+    }
+
+    .project-list li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 9px;
+      border: 2px solid #202638;
+      border-radius: 50%;
+      background: var(--sun);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tags span {
+      padding: 6px 9px;
+      border: 1px solid #bfd3e8;
+      border-radius: 999px;
+      background: #f3f9ff;
+      color: #24405f;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .workflow {
+      padding: 70px 0;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      min-height: 210px;
+      padding: 22px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fffdf8;
+      box-shadow: 5px 5px 0 rgba(32, 38, 56, .14);
+      position: relative;
+    }
+
+    .step-num {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #202638;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 3px 3px 0 #202638;
+      font-weight: 950;
+    }
+
+    .step h3 {
+      margin: 18px 0 8px;
+      font-size: 21px;
+      line-height: 1.2;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 720;
+    }
+
+    .about-contact {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 24px;
+      padding: 72px 0 96px;
+    }
+
+    .panel {
+      padding: 30px;
+      border: 2px solid #202638;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 7px 7px 0 rgba(32, 38, 56, .14);
+    }
+
+    .panel h2 {
+      margin: 0 0 14px;
+      font-size: 34px;
+      line-height: 1.15;
+    }
+
+    .panel p {
+      margin: 0;
+      color: #435066;
+      font-weight: 740;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fbff;
+      font-weight: 850;
+      word-break: break-word;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 800;
+      background: rgba(255, 253, 248, .8);
+    }
+
+    @media (max-width: 980px) {
+      .nav {
+        min-height: auto;
+        padding: 14px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 3px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding-top: 44px;
+      }
+
+      .hero-visual {
+        min-height: 470px;
+      }
+
+      .capabilities,
+      .timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-grid,
+      .about-contact {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section,
+      .nav {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .nav-links a {
+        padding: 8px 9px;
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding: 34px 0 36px;
+        gap: 28px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .quick-stats,
+      .capabilities,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 420px;
+      }
+
+      .workflow-map {
+        height: 360px;
+        padding: 16px;
+      }
+
+      .agent-card {
+        width: 138px;
+        min-height: 86px;
+        font-size: 13px;
+      }
+
+      .core-bot {
+        width: 132px;
+        height: 132px;
+      }
+
+      .core-bot::before,
+      .core-bot::after {
+        top: 45px;
+      }
+
+      .core-bot::before {
+        left: 37px;
+      }
+
+      .core-bot::after {
+        right: 37px;
+      }
+
+      .core-bot b {
+        left: 26px;
+        right: 26px;
+        bottom: 31px;
+      }
+
+      .connector {
+        display: none;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 10px;
+      }
+
+      .projects,
+      .workflow,
+      .about-contact {
+        padding: 48px 0;
+      }
+
+      .project-body,
+      .panel {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="#top" aria-label="回到首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>苏帅宇 · AI 应用开发</span>
+      </a>
+      <div class="nav-links">
+        <a href="#projects">作品</a>
+        <a href="#workflow">方法</a>
+        <a href="#about">关于我</a>
+        <a href="assets/su-shuaiyu-ai-resume.pdf" target="_blank" rel="noopener">简历</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">AI Application Developer</div>
+        <h1 id="hero-title">把 Agent与业务流程做成可运行的产品原型</h1>
+        <p class="hero-copy">
+          我关注 AI 应用从想法到落地的完整链路：需求拆解、工具调用、知识检索、工作流编排、前后端集成与可交付演示。这里展示的是我围绕自动调度、标书生成、融资辅助和 Multi-Agent 产品操作系统做过的作品。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">查看作品集</a>
+          <a class="btn btn-soft" href="assets/su-shuaiyu-ai-resume.pdf" target="_blank" rel="noopener">下载简历 PDF</a>
+        </div>
+        <div class="quick-stats" aria-label="能力概览">
+          <div class="stat"><strong>4</strong><span>AI 应用项目</span></div>
+          <div class="stat"><strong>Agent</strong><span>工具调用与流程编排</span></div>
+          <div class="stat"><strong>RAG</strong><span>知识检索与内容生成</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="desk">
+          <div class="desk-top">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <div class="workflow-map">
+            <div class="connector a"></div>
+            <div class="connector b"></div>
+            <div class="connector c"></div>
+            <div class="connector d"></div>
+            <div class="agent-card one">需求侦察员<span>场景 / 角色 / 约束</span></div>
+            <div class="agent-card two">RAG 工程师<span>文档 / 检索 / 引用</span></div>
+            <div class="agent-card three">流程调度员<span>任务 / 审批 / 执行</span></div>
+            <div class="agent-card four">产品小队长<span>原型 / 验证 / 交付</span></div>
+            <div class="core-bot"><b></b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities" aria-label="核心能力">
+      <article class="capability">
+        <span class="chip">Agent</span>
+        <h3>多智能体协作</h3>
+        <p>把复杂任务拆给不同角色 Agent，形成可追踪、可解释的执行过程。</p>
+      </article>
+      <article class="capability">
+        <span class="chip">RAG</span>
+        <h3>文档理解生成</h3>
+        <p>围绕长文档解析、目录生成、引用依据和内容生成设计产品流程。</p>
+      </article>
+      <article class="capability">
+        <span class="chip">Workflow</span>
+        <h3>业务流程自动化</h3>
+        <p>用 AI 调度、筛选、推荐和确认机制辅助人完成高频业务动作。</p>
+      </article>
+      <article class="capability">
+        <span class="chip">Prototype</span>
+        <h3>全栈原型落地</h3>
+        <p>关注从界面、接口、状态到部署演示的端到端可用性。</p>
+      </article>
+    </section>
+
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Selected Work</div>
+          <h2 id="projects-title">作品集</h2>
+        </div>
+        <p>每个项目都围绕一个明确业务场景，把 AI 能力包装成可被用户理解、操作和验证的产品界面。</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/dispatch-dashboard.png" alt="自动调度算法系统首页截图">
+            <span class="project-badge">01 · Dispatch</span>
+          </div>
+          <div class="project-body">
+            <h3>自动调度算法</h3>
+            <p>面向工单、保洁、维修、运送等场景的 AI 派单与调度看板。</p>
+            <ul class="project-list">
+              <li>将任务类型、人员技能、地点负责人等配置项结构化，支撑自动派单决策。</li>
+              <li>通过趋势分析和待派单指标展示调度效果，让管理者快速判断系统运行状态。</li>
+              <li>适合作为“算法 + 管理后台 + 业务可视化”的 AI 应用案例。</li>
+            </ul>
+            <div class="tags">
+              <span>调度算法</span><span>管理驾驶舱</span><span>规则配置</span><span>数据可视化</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/tender-ai.png" alt="AI 标书生成系统截图">
+            <span class="project-badge">02 · Tender AI</span>
+          </div>
+          <div class="project-body">
+            <h3>AI 标书生成</h3>
+            <p>围绕招标文件解析、需求识别、目录生成和标书正文生成的 AI 文档工作台。</p>
+            <ul class="project-list">
+              <li>支持招标文件 PDF 预览和分页查看，降低用户在长文档中定位信息的成本。</li>
+              <li>用“招标原文、需求解析、目录确认、正文生成”的流程把大模型输出变成可控步骤。</li>
+              <li>适合作为 RAG、长文档理解、生成式办公自动化方向的项目展示。</li>
+            </ul>
+            <div class="tags">
+              <span>RAG</span><span>长文档解析</span><span>大纲生成</span><span>Office AI</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-media">
+            <img src="assets/zgc-financing.png" alt="中关村融资辅助项目集截图">
+            <span class="project-badge">03 · Financing</span>
+          </div>
+          <div class="project-body">
+            <h3>中关村融资辅助</h3>
+            <p>帮助产业研究院按融资阶段、产业赛道和项目状态筛选融资机会。</p>
+            <ul class="project-list">
+              <li>把项目库、融资阶段、重点产业方向等信息组织成清晰的筛选体验。</li>
+              <li>适合进一步接入 AI 推荐、项目画像摘要和投融资匹配解释。</li>
+              <li>展示了面向产业场景的数据产品设计与可视化能力。</li>
+            </ul>
+            <div class="tags">
+              <span>产业项目库</span><span>融资筛选</span><span>AI 推荐</span><span>数据产品</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card tall">
+          <div class="project-media">
+            <img src="assets/multi-agent-os.png" alt="Multi-Agent Startup OS 进度看板截图">
+            <span class="project-badge">04 · Multi-Agent OS</span>
+          </div>
+          <div class="project-body">
+            <h3>Multi-Agent Startup OS</h3>
+            <p>用一组角色化 Agent 辅助创业项目从需求侦察、产品路径、工程实现到财务评估。</p>
+            <ul class="project-list">
+              <li>设计市场小侦探、产品小画家、工程小工匠、财务小算盘等角色，让 AI 协作过程可视化。</li>
+              <li>强调小步推进、MVP 验证、成本估算和风险审查，避免“一上来做全功能”。</li>
+              <li>适合作为 Agent 产品设计、任务分解和人机协作流程的代表项目。</li>
+            </ul>
+            <div class="tags">
+              <span>Multi-Agent</span><span>Startup OS</span><span>任务拆解</span><span>MVP 验证</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="workflow" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">How I Build</div>
+          <h2 id="workflow-title">我的 AI 应用开发方法</h2>
+        </div>
+        <p>我更关注“能被业务人员使用”的 AI 应用，而不是只停留在模型调用演示。</p>
+      </div>
+      <div class="timeline">
+        <article class="step">
+          <div class="step-num">1</div>
+          <h3>拆业务场景</h3>
+          <p>先明确用户、输入材料、约束条件、人工确认点和交付结果。</p>
+        </article>
+        <article class="step">
+          <div class="step-num">2</div>
+          <h3>设计 AI 流程</h3>
+          <p>把 RAG、Agent、工具调用和工作流编排拆成可解释的中间步骤。</p>
+        </article>
+        <article class="step">
+          <div class="step-num">3</div>
+          <h3>做可用原型</h3>
+          <p>用界面、状态、日志和结果预览把模型能力包装成可操作产品。</p>
+        </article>
+        <article class="step">
+          <div class="step-num">4</div>
+          <h3>验证与迭代</h3>
+          <p>根据真实截图、流程反馈和输出质量，继续调整交互与模型策略。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-contact" id="about" aria-label="关于与联系">
+      <article class="panel">
+        <h2>关于我</h2>
+        <p>
+          我是苏帅宇，求职方向是 AI 应用开发。我的作品集中更重视工程落地：怎样把模型、知识库、工具和业务流程放进一个用户真的能操作的系统里。相比单点 Demo，我希望展示的是端到端产品思维、Agent 工作流设计、RAG 文档处理和前后端原型交付能力。
+        </p>
+      </article>
+      <article class="panel">
+        <h2>联系与材料</h2>
+        <p>面试官可以通过这里快速查看简历和代码入口。GitHub 地址可在发布前替换成你的真实主页或项目仓库。</p>
+        <div class="contact-list">
+          <a class="contact-item" href="assets/su-shuaiyu-ai-resume.pdf" target="_blank" rel="noopener">下载简历：su-shuaiyu-ai-resume.pdf</a>
+          <a class="contact-item" href="https://github.com/ssynb" target="_blank" rel="noopener">GitHub：https://github.com/ssynb</a>
+          <div class="contact-item">Email：1286541459@qq.com</div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>© 2026 苏帅宇 · AI Application Developer Portfolio</div>
+  </footer>
+
+  <script>
+    const links = document.querySelectorAll('.nav-links a[href^="#"]');
+    for (const link of links) {
+      link.addEventListener('click', (event) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  </script>
+</body>
+</html>
